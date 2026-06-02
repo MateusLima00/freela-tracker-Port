@@ -1,0 +1,143 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background: radial-gradient(ellipse at 60% 20%, rgba(79, 110, 247, 0.08) 0%, transparent 60%);
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.logoMark {
+  width: 48px;
+  height: 48px;
+  background: var(--color-primary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: white;
+  margin-bottom: var(--spacing-xs);
+}
+
+.title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Segmented control Admin / Cliente */
+.toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.toggleBtn {
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.toggleBtnActive {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.label {
+  font-size: 0.813rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+}
+
+.input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  transition: border-color var(--transition);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.error {
+  font-size: 0.813rem;
+  color: var(--color-danger);
+  text-align: center;
+}
+
+.button {
+  padding: 0.625rem var(--spacing-lg);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color var(--transition);
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

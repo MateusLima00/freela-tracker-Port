@@ -1,0 +1,299 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Role permanece para compatibilidade; a partir da Fase 2 o User é sempre ADMIN.
+// O acesso de clientes usa o model Client dedicado (login próprio).
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum ProjectStatus {
+  PENDING
+  IN_PROGRESS
+  AWAITING_CLIENT // entregou algo e aguarda feedback/material do cliente
+  COMPLETED
+  PAUSED
+  ARCHIVED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum BillingType {
+  FIXED        // valor fechado
+  HOURLY       // por hora (total = horas do timer × hourlyRate)
+  INSTALLMENTS // parcelado
+}
+
+enum InstallmentStatus {
+  PENDING // aguardando
+  SENT    // cobrança enviada ao cliente
+  PAID    // recebido
+  OVERDUE // atrasado
+}
+
+// Estado de uma entrega (Fase 7). A entrega nasce aguardando revisão e,
+// ao ser aprovada, é bloqueada (lockedAt) — o cliente não reprova mais sem
+// o admin desbloquear manualmente.
+enum DeliveryStatus {
+  PENDING_REVIEW // aguardando o cliente revisar
+  APPROVED       // aprovada pelo cliente (bloqueada)
+  REJECTED       // reprovada — aguarda nova versão do admin
+  IN_REVISION    // admin trabalhando em nova versão após feedback
+}
+
+// Resultado do envio de um e-mail transacional (Fase 8).
+enum EmailStatus {
+  SENT   // entregue ao provider (ou logado no modo stub)
+  FAILED // provider retornou erro
+}
+
+// Conta administrativa (o freelancer). Quem opera o sistema.
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          Role           @default(ADMIN)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  timerSessions TimerSession[]
+  refreshTokens RefreshToken[]
+}
+
+// Conta de cliente (quem contratou o serviço). Login separado, somente leitura
+// dos projetos vinculados. `permissions` controla o que ele enxerga no portal.
+model Client {
+  id                 String         @id @default(uuid())
+  firstName          String
+  lastName           String
+  email              String         @unique
+  passwordHash       String
+  notes              String? // anotações internas — NUNCA expostas ao próprio cliente
+  permissions        Json // flags de permissão (ver IClientPermissions)
+  mustChangePassword Boolean        @default(true) // força troca no 1º acesso
+  projects           Project[]
+  refreshTokens      RefreshToken[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+}
+
+// Refresh token persistido (hash SHA-256, nunca o token em claro) para permitir
+// rotação e revogação. Pertence a um User OU a um Client (relações opcionais).
+model RefreshToken {
+  id        String    @id @default(uuid())
+  tokenHash String    @unique
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clientId  String?
+  client    Client?   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revokedAt DateTime? // null = ativo; data = revogado
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([clientId])
+}
+
+model Project {
+  id            String          @id @default(uuid())
+  title         String
+  description   String?
+  progress      Int             @default(0)
+  status        ProjectStatus   @default(PENDING)
+  deadline      DateTime?
+  totalTime     Int             @default(0)
+  // Estimativa de horas do projeto (Fase 9) — base do comparativo "horas vs estimativa"
+  // nos relatórios e do alerta de estouro no dashboard. Null = sem estimativa.
+  estimatedHours Float?
+  clientId      String?
+  client        Client?         @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  // ── Financeiro ──
+  billingType   BillingType     @default(FIXED)
+  totalValue    Float? // valor fechado (FIXED/INSTALLMENTS)
+  hourlyRate    Float? // valor por hora (HOURLY)
+  currency      String          @default("BRL")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  tasks         Task[]
+  timerSessions TimerSession[]
+  updates       ProjectUpdate[]
+  installments  Installment[]
+  deliveries    Delivery[]
+  emailLogs     EmailLog[]
+}
+
+model Installment {
+  id          String            @id @default(uuid())
+  projectId   String
+  project     Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  number      Int // 1, 2, 3...
+  description String?
+  value       Float
+  dueDate     DateTime?
+  status      InstallmentStatus @default(PENDING)
+  paidAt      DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([projectId])
+}
+
+model Task {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  priority    Priority   @default(MEDIUM)
+  // Data de entrega da tarefa (opcional) — base do painel "Próximas tarefas" (§2).
+  dueDate     DateTime?
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([projectId])
+}
+
+model TimerSession {
+  id        String    @id @default(uuid())
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  startTime DateTime
+  endTime   DateTime?
+  duration  Int? // duração ATIVA total em segundos (exclui tempo pausado)
+  isActive  Boolean   @default(true)
+  note      String?
+  // Suporte a pausar/retomar: acumula tempo ativo dos segmentos já encerrados;
+  // lastResumeAt marca o início do segmento ativo corrente (null quando pausado).
+  accumulatedSeconds Int      @default(0)
+  isPaused           Boolean  @default(false)
+  lastResumeAt       DateTime?
+  createdAt DateTime  @default(now())
+}
+
+// Tipo de evento de uma atualização — usado para escolher o ícone no feed de
+// atividade recente do dashboard (§2).
+enum UpdateType {
+  GENERAL  // atualização manual do admin
+  TIMER    // sessão de trabalho registrada pelo timer
+  DELIVERY // nova entrega criada
+  APPROVAL // entrega aprovada pelo cliente
+  REJECTION // entrega reprovada (alteração solicitada)
+  PAYMENT  // evento financeiro
+  STATUS   // mudança de status do projeto
+}
+
+model ProjectUpdate {
+  id        String     @id @default(uuid())
+  projectId String
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  type      UpdateType @default(GENERAL)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([projectId])
+}
+
+// ── Entregas (Fase 7) ────────────────────────────────────────────────────────
+// Uma entrega agrupa versões. Cada solicitação de alteração do cliente gera uma
+// nova versão do admin, preservando o histórico. `lockedAt` trava a entrega após
+// a aprovação para impedir reprovação posterior sem ação manual do admin.
+model Delivery {
+  id          String            @id @default(uuid())
+  projectId   String
+  project     Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  status      DeliveryStatus    @default(PENDING_REVIEW)
+  lockedAt    DateTime? // preenchido na aprovação — entrega bloqueada
+  versions    DeliveryVersion[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([projectId])
+}
+
+model DeliveryVersion {
+  id            String    @id @default(uuid())
+  deliveryId    String
+  delivery      Delivery  @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+  versionNumber Int // 1, 2, 3... incremental por entrega
+  images        String[] // caminhos públicos das imagens (nome UUID, sem EXIF)
+  feedback      String? // anotação do cliente ao solicitar alteração
+  reviewedAt    DateTime? // quando o cliente revisou (aprovou/reprovou) esta versão
+  createdAt     DateTime  @default(now())
+
+  @@index([deliveryId])
+}
+
+// ── Auditoria (segurança) ────────────────────────────────────────────────────
+// Registro append-only de ações sensíveis (login, CRUD de cliente, aprovação de
+// entrega etc.) para rastreabilidade. Nunca exposto em rotas de cliente.
+model AuditLog {
+  id         String   @id @default(uuid())
+  actorType  String // 'admin' | 'client' | 'system'
+  actorId    String? // id do User/Client quando aplicável
+  action     String // ex: 'auth.login', 'client.create', 'delivery.approve'
+  targetType String? // entidade afetada (ex: 'Project')
+  targetId   String?
+  ipAddress  String?
+  metadata   Json? // detalhes adicionais não sensíveis
+  createdAt  DateTime @default(now())
+
+  @@index([actorId])
+  @@index([action])
+}
+
+// ── Tentativas de login (bloqueio progressivo) ───────────────────────────────
+// Cada tentativa (sucesso/falha) é registrada por identificador (e-mail) + IP.
+// O serviço de auth conta as falhas recentes para bloquear temporariamente.
+model LoginAttempt {
+  id         String   @id @default(uuid())
+  identifier String // e-mail em minúsculas
+  ipAddress  String?
+  success    Boolean
+  createdAt  DateTime @default(now())
+
+  @@index([identifier, createdAt])
+}
+
+// ── Log de e-mails (Fase 8) ──────────────────────────────────────────────────
+// Histórico de e-mails transacionais por projeto. `projectId` é opcional porque
+// alguns e-mails (boas-vindas ao cliente) não pertencem a um projeto específico.
+model EmailLog {
+  id        String      @id @default(uuid())
+  projectId String?
+  project   Project?    @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  to        String
+  subject   String
+  body      String
+  event     String // identificador do evento (ex: "delivery.created")
+  status    EmailStatus @default(SENT)
+  error     String? // mensagem de erro quando status = FAILED
+  sentAt    DateTime    @default(now())
+
+  @@index([projectId])
+}

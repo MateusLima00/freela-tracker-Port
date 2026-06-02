@@ -1,0 +1,79 @@
+.list { display: flex; flex-direction: column; gap: var(--spacing-md); }
+.loading, .empty { font-size: 0.875rem; color: var(--color-text-muted); }
+
+.card {
+  display: flex; flex-direction: column; gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.cardTop { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--spacing-md); }
+.cardTitle { font-size: 0.9375rem; font-weight: 600; color: var(--color-text); }
+.cardDesc { font-size: 0.8125rem; color: var(--color-text-light); margin-top: 2px; }
+.meta { font-size: 0.6875rem; color: var(--color-text-muted); }
+
+/* ── Imagens ── */
+.thumbs { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); }
+.thumb {
+  width: 120px; height: 120px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-input);
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb:hover { border-color: var(--color-primary); }
+
+/* ── Ações ── */
+.actions { display: flex; gap: var(--spacing-sm); justify-content: flex-end; }
+
+.btnApprove, .btnChanges, .btnPrimary, .btnGhost {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem; font-weight: 500;
+  border: 1px solid transparent;
+  transition: background-color var(--transition);
+}
+.btnApprove { background: var(--color-success); color: #fff; }
+.btnApprove:hover:not(:disabled) { filter: brightness(1.08); }
+.btnChanges {
+  background: var(--color-warning-subtle); color: var(--color-warning);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.btnChanges:hover:not(:disabled) { background: rgba(245, 158, 11, 0.18); }
+.btnPrimary { background: var(--color-primary); color: #fff; }
+.btnPrimary:hover:not(:disabled) { background: var(--color-primary-hover); }
+.btnGhost { background: transparent; border-color: var(--color-border); color: var(--color-text-light); }
+.btnGhost:hover { background: var(--color-bg-elevated); }
+.btnApprove:disabled, .btnChanges:disabled, .btnPrimary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.lockedNote {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8125rem; color: var(--color-success);
+}
+
+/* ── Formulário de feedback ── */
+.feedbackForm { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+.textarea {
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0.6rem;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+}
+.textarea:focus { border-color: var(--color-primary); }
+.feedbackFooter { display: flex; align-items: center; justify-content: space-between; }
+.counter { font-size: 0.6875rem; color: var(--color-text-muted); }
+
+.errorMsg {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+  margin-top: 2px;
+}

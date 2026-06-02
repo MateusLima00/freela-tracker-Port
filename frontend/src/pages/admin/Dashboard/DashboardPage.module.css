@@ -1,0 +1,557 @@
+/* ── Page ──────────────────────────────────────────────────────── */
+.page {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 100%;
+}
+
+.pageTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ── Stat grid (4 cards) ────────────────────────────────────────── */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.statCard {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: border-color var(--transition);
+}
+
+.statCard:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.statCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.statIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statIconPositive {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-light);
+}
+
+.statIconNeutral {
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--color-text-muted);
+}
+
+.statDelta {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+
+.deltaPositive {
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ade80;
+}
+
+.deltaNeutral {
+  background: rgba(148, 163, 184, 0.1);
+  color: var(--color-text-muted);
+}
+
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  letter-spacing: 0.01em;
+}
+
+.statSub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Main grid (esquerda 60% + direita 40%) ─────────────────────── */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* ── Card base ──────────────────────────────────────────────────── */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.cardTitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* ── Coluna direita ─────────────────────────────────────────────── */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Tabela de projetos recentes ────────────────────────────────── */
+.projectTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.projectTableHead {
+  display: grid;
+  grid-template-columns: 1fr 120px 150px 90px;
+  gap: 0.5rem;
+  padding: 0 0.5rem 0.625rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.projectTableRow {
+  display: grid;
+  grid-template-columns: 1fr 120px 150px 90px;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.projectTableRow:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.projectInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.projectName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.projectClient {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progressCell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progressPct {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  min-width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.deadlineCell {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Sparkline no card de horas ─────────────────────────────────── */
+.sparkline { margin-top: 0.35rem; }
+
+/* ── Card de resumo financeiro ──────────────────────────────────── */
+.financeCard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+.financeItem { display: flex; flex-direction: column; gap: 2px; }
+.financeLabel { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-muted); }
+.financeValue { font-size: 1.05rem; font-weight: 600; color: var(--color-text); }
+.financeSuccess { color: var(--color-success); }
+.financeOverdue { justify-self: end; }
+.overdueBadge, .okBadge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; padding: 5px 10px; border-radius: 99px;
+}
+.overdueBadge { background: var(--color-danger-subtle); color: var(--color-danger); }
+.okBadge { background: var(--color-success-subtle); color: var(--color-success); }
+
+/* ── Coluna esquerda ────────────────────────────────────────────── */
+.leftCol { display: flex; flex-direction: column; gap: 1rem; }
+.cardHeader { display: flex; align-items: center; justify-content: space-between; }
+
+/* ── Grid de projetos ativos (cards) ────────────────────────────── */
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.875rem;
+}
+.projectCard {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  padding: 0.875rem;
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+.projectCard:hover { border-color: var(--color-border-strong); background: var(--color-bg-elevated); }
+/* Alerta visual de estouro de horas */
+.projectOver { border-color: rgba(239, 68, 68, 0.45); }
+.projectCardTop { display: flex; align-items: center; gap: 0.5rem; }
+.projectCardName {
+  flex: 1; min-width: 0;
+  font-size: 0.875rem; font-weight: 600; color: var(--color-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.projectCardClient { font-size: 0.75rem; color: var(--color-text-muted); margin-top: -2px; }
+.projectCardMeta {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 0.875rem;
+  font-size: 0.7rem; color: var(--color-text-muted);
+}
+.metaDanger { color: var(--color-danger); font-weight: 600; }
+.overWarn { display: inline-flex; align-items: center; gap: 4px; font-size: 0.6875rem; color: var(--color-danger); }
+
+/* ── Próximas tarefas ───────────────────────────────────────────── */
+.taskList { display: flex; flex-direction: column; }
+.taskItem {
+  display: flex; align-items: center; gap: 0.625rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+.taskItem:last-child { border-bottom: none; }
+.taskItem:hover .taskTitle { color: var(--color-primary-light); }
+.taskBody { min-width: 0; flex: 1; }
+.taskTitle {
+  font-size: 0.8125rem; color: var(--color-text); font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color var(--transition);
+}
+.taskMeta { font-size: 0.7rem; color: var(--color-text-muted); margin-top: 2px; }
+
+/* ── Atividade: torna o item clicável e cores por tipo ──────────── */
+.activityItem { cursor: pointer; }
+.activityItem:hover .activityTitle { color: var(--color-primary-light); }
+.activityTitle { transition: color var(--transition); }
+.act_TIMER     { background: var(--color-primary-subtle); color: var(--color-primary-light); }
+.act_DELIVERY  { background: var(--color-info-subtle); color: var(--color-info); }
+.act_APPROVAL  { background: var(--color-success-subtle); color: var(--color-success); }
+.act_REJECTION { background: var(--color-danger-subtle); color: var(--color-danger); }
+.act_PAYMENT   { background: var(--color-success-subtle); color: var(--color-success); }
+.act_STATUS    { background: var(--color-warning-subtle); color: var(--color-warning); }
+.act_GENERAL   { background: rgba(148, 163, 184, 0.12); color: var(--color-text-light); }
+
+/* ── Tooltip do gráfico ─────────────────────────────────────────── */
+.tooltip {
+  background: var(--color-bg-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+
+.tooltipLabel {
+  color: var(--color-text-muted);
+}
+
+.tooltipValue {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* ── Legenda do donut ───────────────────────────────────────────── */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  flex: 1;
+}
+
+.legendCount {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* ── Barras horizontais ─────────────────────────────────────────── */
+.barList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.barLabel {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s ease;
+  min-width: 4px;
+}
+
+.barCount {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text);
+  min-width: 20px;
+  text-align: right;
+}
+
+/* ── Feed de atividade ──────────────────────────────────────────── */
+.activityList {
+  display: flex;
+  flex-direction: column;
+}
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.activityItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activityIconWrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.activityBody {
+  min-width: 0;
+}
+
+.activityTitle {
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activityMeta {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* ── Estado vazio ───────────────────────────────────────────────── */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+  color: var(--color-text-muted);
+}
+
+.emptyIcon {
+  opacity: 0.35;
+}
+
+.emptyText {
+  font-size: 0.875rem;
+}
+
+/* ══════════════════════════════════════════
+   TABLET  768px – 1023px
+══════════════════════════════════════════ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page { padding: 1.5rem; }
+
+  .statGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .projectTableHead,
+  .projectTableRow {
+    grid-template-columns: 1fr 110px 120px;
+  }
+
+  .deadlineCell { display: none; }
+
+  /* Resumo financeiro: 2 colunas, badge ocupa a linha toda */
+  .financeCard { grid-template-columns: 1fr 1fr; }
+  .financeOverdue { grid-column: 1 / -1; justify-self: start; }
+}
+
+/* ══════════════════════════════════════════
+   MOBILE  < 768px
+══════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .page {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .pageTitle { font-size: 1.125rem; }
+
+  /* Stat cards 2×2 */
+  .statGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .statCard { padding: 1rem; }
+
+  .statValue { font-size: 1.4rem; }
+
+  /* Dashboard principal em coluna única */
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tabela de projetos recentes – simplificada */
+  .projectTableHead { display: none; }
+
+  .projectTableRow {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    padding: 0.625rem 0.25rem;
+  }
+
+  .progressCell,
+  .deadlineCell { display: none; }
+
+  .projectInfo { min-width: 0; }
+
+  .projectName {
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .projectClient { font-size: 0.7rem; }
+
+  /* Resumo financeiro e grid de projetos empilham em coluna única */
+  .financeCard { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .financeOverdue { grid-column: 1 / -1; justify-self: start; }
+  .projectGrid { grid-template-columns: 1fr; }
+}
+

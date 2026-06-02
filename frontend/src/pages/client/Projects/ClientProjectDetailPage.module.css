@@ -1,0 +1,399 @@
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  transition: color var(--transition);
+}
+
+.back:hover {
+  color: var(--color-text);
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.desc {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+/* ── Mini cards de métrica ── */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+.metricCard {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.metricLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.metricValue {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.metricDanger {
+  color: var(--color-danger);
+}
+
+.metricSub {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Barra de progresso ── */
+.progressCard {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.progressTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--spacing-sm);
+}
+
+.progressLabel {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+}
+
+.progressPct {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* ── Seções ── */
+.section {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+}
+
+.sectionTitle {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-md);
+}
+
+.empty {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ── Timeline de milestones (horizontal) ── */
+.milestones {
+  display: flex;
+  gap: var(--spacing-lg);
+  overflow-x: auto;
+  padding-bottom: var(--spacing-sm);
+}
+
+.milestone {
+  position: relative;
+  min-width: 150px;
+  padding-top: 18px;
+  flex-shrink: 0;
+}
+
+.milestone::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: -1.5rem;
+  height: 2px;
+  background: var(--color-border);
+}
+
+.milestone:last-child::before {
+  right: 0;
+}
+
+.milestoneDot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 2px solid var(--color-bg-card);
+  box-shadow: 0 0 0 2px var(--color-primary-subtle);
+}
+
+.milestoneTitle {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.milestoneDate {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+/* ── Grid tarefas + feed ── */
+.grid {
+  display: grid;
+  grid-template-columns: 65fr 35fr;
+  gap: var(--spacing-md);
+  align-items: start;
+}
+
+/* ── Tarefas agrupadas ── */
+.taskGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.taskGroup:last-child {
+  margin-bottom: 0;
+}
+
+.taskGroupLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.taskGroupCount {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.taskRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0.5rem 0.625rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-input);
+}
+
+.taskIcon {
+  color: var(--color-primary-light);
+  font-size: 0.9rem;
+  width: 16px;
+  text-align: center;
+}
+
+.taskTitle {
+  font-size: 0.8125rem;
+  color: var(--color-text);
+}
+
+.taskDone .taskTitle {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.taskDone .taskIcon {
+  color: var(--color-success);
+}
+
+/* ── Feed de atualizações ── */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.updateCard {
+  position: relative;
+  padding-left: var(--spacing-lg);
+}
+
+.updateDot {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.updateCard::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 16px;
+  bottom: -10px;
+  width: 1px;
+  background: var(--color-border);
+}
+
+.updateCard:last-child::after {
+  display: none;
+}
+
+.updateTitle {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.updateDate {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  margin: 2px 0 4px;
+}
+
+.updateContent {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 900px) {
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+  }
+}
+
+/* ── Financeiro ── */
+.finSummary {
+  display: flex;
+  gap: var(--spacing-xl);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+}
+
+.finItem { display: flex; flex-direction: column; gap: 2px; }
+.finLabel { font-size: 0.6875rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.finValue { font-size: 1.0625rem; font-weight: 500; color: var(--color-text); }
+
+.finProgress { display: flex; flex-direction: column; gap: 5px; }
+.finProgressLabel { font-size: 0.75rem; color: var(--color-text-muted); }
+
+.finHint { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 6px; }
+
+.instTable {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: var(--spacing-md);
+}
+
+.instRow {
+  display: grid;
+  grid-template-columns: 24px 1fr auto auto auto;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0.5rem 0.625rem;
+  background: var(--color-bg-input);
+  border-radius: var(--radius-sm);
+}
+
+.instNum {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+}
+
+.instDesc { font-size: 0.8125rem; color: var(--color-text); }
+.instDue { font-size: 0.75rem; color: var(--color-text-muted); }
+.instValue { font-size: 0.8125rem; font-weight: 500; color: var(--color-text); font-variant-numeric: tabular-nums; }
+
+.instStatus {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.instPaid { background: var(--color-success-subtle); color: var(--color-success); border-color: rgba(34,197,94,0.25); }
+.instPending { background: var(--color-warning-subtle); color: var(--color-warning); border-color: rgba(245,158,11,0.25); }
+
+@media (max-width: 600px) {
+  .instRow { grid-template-columns: 20px 1fr auto; }
+  .instDue { display: none; }
+}

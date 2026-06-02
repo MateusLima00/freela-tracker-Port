@@ -1,0 +1,25 @@
+# ── Dependências ──────────────────────────────────────────
+node_modules/
+
+# ── Variáveis de ambiente (NUNCA commitar — só .env.example) ──
+.env
+.env.*
+!.env.example
+
+# ── Build / saída ─────────────────────────────────────────
+dist/
+build/
+*.tsbuildinfo
+
+# ── Uploads de imagens (conteúdo gerado em runtime) ───────
+backend/uploads/
+
+# ── Logs ──────────────────────────────────────────────────
+*.log
+npm-debug.log*
+
+# ── SO / editor ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

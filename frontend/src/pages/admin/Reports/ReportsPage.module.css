@@ -1,0 +1,106 @@
+.page { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+.note { font-size: 0.8125rem; color: var(--color-text-muted); }
+
+.header { display: flex; flex-direction: column; gap: 4px; }
+.title { font-size: 1.5rem; font-weight: 600; color: var(--color-text); }
+.subtitle { font-size: 0.875rem; color: var(--color-text-light); }
+
+/* ── Filtros ── */
+.filters {
+  display: flex; align-items: flex-end; gap: var(--spacing-md);
+  flex-wrap: wrap;
+  padding: var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.field { display: flex; flex-direction: column; gap: 4px; }
+.label { font-size: 0.75rem; color: var(--color-text-light); }
+.input, .select {
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  padding: 0.45rem 0.6rem;
+  outline: none;
+  font-family: inherit;
+  min-width: 160px;
+}
+.input:focus, .select:focus { border-color: var(--color-primary); }
+
+.btnExport {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0.5rem 0.875rem;
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  font-size: 0.8125rem;
+  margin-left: auto;
+  transition: background-color var(--transition);
+}
+.btnExport:hover:not(:disabled) { background: var(--color-bg-elevated); }
+.btnExport:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Cards de totais ── */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); }
+.statCard {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.statLabel { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-muted); }
+.statValue { font-size: 1.25rem; font-weight: 600; color: var(--color-text); }
+
+/* ── Comparativo com estimativa ── */
+.estimate {
+  display: flex; flex-direction: column; gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.estimateOver { border-color: rgba(239, 68, 68, 0.4); }
+.estimateTop { display: flex; align-items: center; justify-content: space-between; }
+.estimateLabel { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; color: var(--color-text); }
+.estimateOver .estimateLabel { color: var(--color-danger); }
+.estimatePct { font-size: 0.875rem; font-weight: 600; color: var(--color-text-light); }
+.estimateWarn { font-size: 0.75rem; color: var(--color-danger); }
+
+/* ── Gráfico / Tabela ── */
+.chartCard, .tableCard {
+  display: flex; flex-direction: column; gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.chartTitle { font-size: 0.8125rem; font-weight: 600; color: var(--color-text-light); }
+
+.table { display: flex; flex-direction: column; }
+.tRow {
+  display: grid;
+  grid-template-columns: 100px 70px 70px 90px 1fr;
+  gap: var(--spacing-sm);
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+}
+.tHead {
+  border-top: none;
+  font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.03em;
+  color: var(--color-text-muted);
+}
+.tDuration { color: var(--color-text); font-weight: 500; }
+.tNote { color: var(--color-text-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (max-width: 768px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .tRow { grid-template-columns: 1fr 1fr 1fr; }
+  .tNote { grid-column: 1 / -1; white-space: normal; }
+}

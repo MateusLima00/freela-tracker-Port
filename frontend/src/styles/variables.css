@@ -1,0 +1,69 @@
+:root {
+  /* ─── Brand ─────────────────────────────────
+     Identidade profissional: azul-índigo sólido (não neon vibrante).
+     Tokens novos (-hover, -subtle) coexistem com os legados (-dark, -light)
+     que apontam para os mesmos valores — evita quebrar CSS existente. */
+  --color-primary:        #4f6ef7;  /* azul-índigo sólido       */
+  --color-primary-hover:  #3d5ce8;  /* hover de botões/links    */
+  --color-primary-subtle: rgba(79, 110, 247, 0.1); /* fundos sutis */
+  --color-primary-dark:   #3d5ce8;  /* legado → = hover         */
+  --color-primary-light:  #6b86f9;  /* legado → tint mais claro */
+
+  /* ─── Semantic ───────────────────────────────── */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger:  #ef4444;
+  --color-info:    #38bdf8;
+
+  /* fundos sutis dos status (12% de opacidade) — usar com texto na cor sólida */
+  --color-success-subtle: rgba(34, 197, 94, 0.12);
+  --color-warning-subtle: rgba(245, 158, 11, 0.12);
+  --color-danger-subtle:  rgba(239, 68, 68, 0.12);
+  --color-info-subtle:    rgba(56, 189, 248, 0.12);
+
+  /* ─── Surface ──────────────────────────────────
+     Fundo quase preto azulado → cards levemente mais claros → elevados. */
+  --color-bg:          #0f1117;  /* fundo principal da página */
+  --color-bg-card:     #161b27;  /* cards e painéis           */
+  --color-bg-elevated: #1c2333;  /* modais, dropdowns, hover  */
+  --color-bg-input:    #0f1117;  /* fundo de inputs           */
+
+  --color-border:        rgba(255, 255, 255, 0.07);
+  --color-border-strong: rgba(255, 255, 255, 0.13);
+
+  /* ─── Text ───────────────────────────────────── */
+  --color-text:       #e2e8f0;  /* primário   */
+  --color-text-light: #94a3b8;  /* secundário */
+  --color-text-muted: #64748b;  /* meta, placeholder */
+
+  /* ─── Spacing scale ──────────────────────────── */
+  --spacing-xs:  0.25rem;  /*  4px */
+  --spacing-sm:  0.5rem;   /*  8px */
+  --spacing-md:  1rem;     /* 16px */
+  --spacing-lg:  1.5rem;   /* 24px */
+  --spacing-xl:  2rem;     /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+
+  /* ─── Border radius ──────────────────────────── */
+  --radius-sm: 0.375rem;  /*  6px — inputs            */
+  --radius-md: 0.625rem;  /* 10px — cards (padrão)    */
+  --radius-lg: 0.75rem;   /* 12px                     */
+  --radius-xl: 1rem;      /* 16px                     */
+
+  /* ─── Shadows ──────────────────────────────────
+     Sombras sutis no lugar de borders coloridos brilhantes. */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.25);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 12px 28px -6px rgb(0 0 0 / 0.45);
+  --shadow-glow: 0 0 0 3px rgba(79, 110, 247, 0.18); /* foco/realce */
+
+  /* ─── Typography ─────────────────────────────── */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* ─── Layout ─────────────────────────────────── */
+  --sidebar-width: 240px;
+  --header-height: 60px;
+
+  /* ─── Animation ──────────────────────────────── */
+  --transition: 150ms ease;
+}
